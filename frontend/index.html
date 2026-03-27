@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Parking System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🚗 Smart Parking System</h1>
+
+<div class="container">
+
+    <!-- Park Vehicle -->
+    <div class="card">
+        <h2>Park Vehicle</h2>
+        <form id="parkForm">
+            <input type="text" id="vehicle" placeholder="Vehicle Number" required>
+
+            <select id="type">
+                <option value="car">Car</option>
+                <option value="bike">Bike</option>
+            </select>
+
+            <button type="submit">Park</button>
+        </form>
+
+        <!-- NEW BUTTON -->
+        <button onclick="getStaffRoute()">Optimize Staff Route</button>
+    </div>
+
+</div>
+
+<!-- Result -->
+<div class="result-box">
+    <h2>Result</h2>
+    <p id="result">No data yet</p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
