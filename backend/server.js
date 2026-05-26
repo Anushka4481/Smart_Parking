@@ -2,53 +2,52 @@ const express = require("express");
 const cors = require("cors");
 const { exec } = require("child_process");
 const path = require("path");
+const db = require("./db");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-// Paths to executables
-const parkingExePath = path.join(__dirname, "../algorithm/parking.exe");
-const staffExePath = path.join(__dirname, "../algorithm/staff.exe");
+const parkingExe = path.join(__dirname, "../algorithm/parking.exe");
+const staffExe = path.join(__dirname, "../algorithm/staff.exe");
 
-// 🚗 PARK VEHICLE (Dijkstra)
+// PARK VEHICLE
 app.post("/park", (req, res) => {
-    const type = req.body.type;
+    const { type, vehicle } = req.body;
 
-    if (!type) {
-        return res.status(400).send("Vehicle type required");
+    if (!type || !vehicle) {
+        return res.send("Missing data");
     }
 
-    // ✅ ADD DEBUG HERE
-    console.log("FULL PATH:", parkingExePath);
-    console.log("TYPE:", type);
+    exec(`"${parkingExe}" ${type}`, (err, stdout) => {
+        if (err) return res.send("Algorithm error");
 
-    exec(`"${parkingExePath}" ${type}`, { shell: true }, (error, stdout, stderr) => {
+        const match = stdout.match(/ALLOCATED_SLOT (\d+)/);
 
-        console.log("ERROR:", error);
-        console.log("STDERR:", stderr);
-        console.log("OUTPUT:", stdout);
+        if (!match) return res.send(stdout);
 
-        if (error) {
-            return res.status(500).send("Error running parking program");
-        }
+        const slot = match[1];
 
-        res.send(stdout);
+        // SAVE TO DB (FIXED)
+        db.query(
+            "INSERT INTO parking(vehicle_no, slot_id) VALUES (?,?)",
+            [vehicle, slot]
+        );
+
+        db.query(
+            "UPDATE slots SET occupied=1 WHERE id=?",
+            [slot]
+        );
+
+        res.send(`Vehicle ${vehicle} parked at slot ${slot}`);
     });
 });
-// 👨‍🔧 STAFF ROUTE (Kruskal)
+
+// STAFF ROUTE
 app.get("/staff", (req, res) => {
-
-    exec(`"${staffExePath}"`, { shell: true }, (error, stdout, stderr) => {
-
-        console.log("ERROR:", error);
-        console.log("STDERR:", stderr);
-        console.log("OUTPUT:", stdout);
-
-        if (error) {
-            return res.status(500).send("Error running staff program");
-        }
-
+    exec(`"${staffExe}"`, (err, stdout) => {
+        if (err) return res.send("Error executing staff module");
         res.send(stdout);
     });
 });
