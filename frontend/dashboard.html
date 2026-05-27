@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Parking - Dashboard</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+
+            background: linear-gradient(
+                -45deg,
+                #ff6a00,
+                #ee0979,
+                #00c6ff,
+                #0072ff
+            );
+
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+
+            color: white;
+        }
+
+        @keyframes gradientBG {
+
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .navbar {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 15px 30px;
+
+            background: rgba(255,255,255,0.15);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .title {
+
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .title h1 {
+
+            margin-bottom: 10px;
+        }
+
+        .dashboard {
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 25px;
+
+            margin: 40px;
+        }
+
+        .card {
+
+            width: 220px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            background: rgba(255,255,255,0.15);
+
+            backdrop-filter: blur(10px);
+
+            border-radius: 20px;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+
+            margin-bottom: 10px;
+        }
+
+        .card p {
+
+            font-size: 30px;
+            font-weight: bold;
+
+            margin: 0;
+        }
+
+        @media(max-width:768px){
+
+            .dashboard{
+
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+
+        <h2>Smart Parking Dashboard</h2>
+
+        <a href="index.html">
+            Back To Home
+        </a>
+
+    </div>
+
+    <div class="title">
+
+        <h1>Admin Dashboard</h1>
+
+        <p>Live Parking Statistics</p>
+
+    </div>
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h3>Total Slots</h3>
+            <p id="total">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Occupied Slots</h3>
+            <p id="occupied">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Available Slots</h3>
+            <p id="available">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Cars</h3>
+            <p id="cars">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Bikes</h3>
+            <p id="bikes">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Revenue</h3>
+            <p id="revenue">₹0</p>
+        </div>
+
+    </div>
+
+    <script>
+
+        async function loadDashboard() {
+
+            try {
+
+                const res =
+                    await fetch(
+                        "http://localhost:3000/dashboard"
+                    );
+
+                const data =
+                    await res.json();
+
+                document.getElementById("total").innerText =
+                    data.total;
+
+                document.getElementById("occupied").innerText =
+                    data.occupied;
+
+                document.getElementById("available").innerText =
+                    data.available;
+
+                document.getElementById("cars").innerText =
+                    data.cars;
+
+                document.getElementById("bikes").innerText =
+                    data.bikes;
+
+                document.getElementById("revenue").innerText =
+                    "₹" + data.revenue;
+
+            } catch (err) {
+
+                console.log("Dashboard Error");
+            }
+        }
+
+        loadDashboard();
+
+        setInterval(loadDashboard, 5000);
+
+    </script>
+
+</body>
+</html>
