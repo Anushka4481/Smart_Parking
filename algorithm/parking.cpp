@@ -6,11 +6,7 @@ struct Slot {
     string type;
     bool occupied;
 };
-
-// ---------------------
 // PARKING SLOTS
-// ---------------------
-
 vector<Slot> slots = {
 
     // Cars
@@ -42,34 +38,24 @@ vector<Slot> slots = {
 
 // Graph with 30 nodes
 vector<pair<int,int>> graph[30];
-
-// ---------------------
 // CREATE PARKING MAP
-// ---------------------
-
 void buildGraph()
 {
     graph[0]={{1,2},{2,3}};
-
     graph[1]={{3,2},{4,2}};
     graph[2]={{5,2},{6,2}};
-
     graph[3]={{7,1},{8,2}};
     graph[4]={{9,2},{10,1}};
-
     graph[5]={{11,1},{12,2}};
     graph[6]={{13,1},{14,2}};
-
     graph[7]={{15,1}};
     graph[8]={{16,1}};
     graph[9]={{17,1}};
     graph[10]={{18,1}};
-
     graph[11]={{19,1}};
     graph[12]={{20,1}};
     graph[13]={{21,1}};
     graph[14]={{22,1}};
-
     graph[15]={{23,1}};
     graph[16]={{24,1}};
     graph[17]={{25,1}};
@@ -78,11 +64,7 @@ void buildGraph()
     graph[20]={{28,1}};
     graph[21]={{29,1}};
 }
-
-// ---------------------
 // DIJKSTRA
-// ---------------------
-
 vector<int> dijkstra(int start, vector<int>& dist)
 {
     dist.assign(30, INT_MAX);
@@ -125,11 +107,7 @@ vector<int> dijkstra(int start, vector<int>& dist)
 
     return parent;
 }
-
-// ---------------------
 // PATH GENERATOR
-// ---------------------
-
 vector<int> getPath(int target, vector<int>& parent)
 {
     vector<int> path;
@@ -144,11 +122,7 @@ vector<int> getPath(int target, vector<int>& parent)
 
     return path;
 }
-
-// ---------------------
 // FIND BEST SLOT
-// ---------------------
-
 int findNearestSlot(string type, vector<int>& dist)
 {
     int bestSlot = -1;
@@ -169,11 +143,7 @@ int findNearestSlot(string type, vector<int>& dist)
 
     return bestSlot;
 }
-
-// ---------------------
 // MARK SLOT OCCUPIED
-// ---------------------
-
 void occupySlot(int slotNode)
 {
     for(auto &slot : slots)
@@ -185,10 +155,6 @@ void occupySlot(int slotNode)
         }
     }
 }
-
-// ---------------------
-// MAIN
-// ---------------------
 
 int main(int argc, char* argv[])
 {

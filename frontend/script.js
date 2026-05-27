@@ -1,7 +1,5 @@
-// =========================
-// PARK VEHICLE
-// =========================
 
+// PARK VEHICLE
 document.getElementById("parkForm").onsubmit = async (e) => {
 
     e.preventDefault();
@@ -53,11 +51,7 @@ document.getElementById("parkForm").onsubmit = async (e) => {
     }
 };
 
-
-// =========================
 // EXIT VEHICLE
-// =========================
-
 async function exitVehicle() {
 
     const vehicle =
@@ -108,11 +102,7 @@ ${data.status}`;
     }
 }
 
-
-// =========================
 // STAFF ROUTE
-// =========================
-
 async function getStaffRoute() {
 
     try {
@@ -134,10 +124,7 @@ async function getStaffRoute() {
 }
 
 
-// =========================
 // LOAD DASHBOARD
-// =========================
-
 async function loadDashboard() {
 
     try {
@@ -169,10 +156,7 @@ async function loadDashboard() {
 }
 
 
-// =========================
 // LOAD SLOT STATUS
-// =========================
-
 async function loadSlots() {
 
     try {
@@ -219,9 +203,8 @@ async function loadSlots() {
 }
 
 
-// =========================
 // AUTO REFRESH
-// =========================
+
 
 loadDashboard();
 loadSlots();

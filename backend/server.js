@@ -15,11 +15,6 @@ const parkingExePath =
 const staffExePath =
     path.join(__dirname, "../algorithm/staff.exe");
 
-
-// =========================
-// PARK VEHICLE
-// =========================
-
 app.post("/park", (req, res) => {
 
     const { type, vehicle } = req.body;
@@ -76,11 +71,6 @@ app.post("/park", (req, res) => {
     );
 });
 
-
-// =========================
-// STAFF ROUTE
-// =========================
-
 app.get("/staff", (req, res) => {
 
     exec(
@@ -98,11 +88,6 @@ app.get("/staff", (req, res) => {
         }
     );
 });
-
-
-// =========================
-// EXIT VEHICLE
-// =========================
 
 app.post("/exit", (req, res) => {
 
@@ -186,11 +171,6 @@ app.post("/exit", (req, res) => {
     });
 });
 
-
-// =========================
-// DASHBOARD
-// =========================
-
 app.get("/dashboard", (req, res) => {
 
     const slotSql = `
@@ -252,11 +232,6 @@ app.get("/dashboard", (req, res) => {
     );
 });
 
-
-// =========================
-// ALL SLOT STATUS
-// =========================
-
 app.get("/slots", (req, res) => {
 
     const sql = `
@@ -281,11 +256,6 @@ app.get("/slots", (req, res) => {
         }
     );
 });
-
-
-// =========================
-// SERVER
-// =========================
 
 const PORT = 3000;
 
